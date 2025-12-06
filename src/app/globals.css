@@ -116,3 +116,856 @@ body {
     @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
   }
 }
+
+/* ==========================================
+   CHESS GAME STYLES - RETROUI THEME
+   Based on retroui.dev neobrutalism style
+   Color Ratio: Blue 60%, Red 30%, Yellow 10%
+   ========================================== */
+
+/* RetroUI Color Variables */
+:root {
+  /* Primary - Blue 60% */
+  --retro-blue: #3B82F6;
+  --retro-blue-dark: #2563EB;
+  --retro-blue-light: #60A5FA;
+  
+  /* Secondary - Red 30% */
+  --retro-red: #EF4444;
+  --retro-red-dark: #DC2626;
+  --retro-red-light: #F87171;
+  
+  /* Accent - Yellow 10% */
+  --retro-yellow: #FACC15;
+  --retro-yellow-dark: #EAB308;
+  
+  /* Neutrals */
+  --retro-white: #FFFFFF;
+  --retro-black: #000000;
+  --retro-gray: #F3F4F6;
+  
+  /* Shadows - RetroUI style */
+  --retro-shadow: 4px 4px 0px #000000;
+  --retro-shadow-lg: 6px 6px 0px #000000;
+  --retro-shadow-sm: 2px 2px 0px #000000;
+}
+
+/* Container */
+.chess-container {
+  @apply w-full max-w-md mx-auto px-2;
+  background: var(--retro-white);
+}
+
+/* Chess Game */
+.chess-game {
+  @apply flex flex-col items-center gap-4;
+  background: var(--retro-white);
+}
+
+/* Game Header */
+.game-header {
+  @apply flex items-center justify-between w-full px-2 py-2;
+}
+
+.difficulty-badge {
+  @apply px-4 py-2 text-sm font-black uppercase;
+  background: var(--retro-blue);
+  color: var(--retro-white);
+  border: 3px solid var(--retro-black);
+  box-shadow: var(--retro-shadow);
+}
+
+.move-count {
+  @apply text-base font-bold;
+  color: var(--retro-black);
+}
+
+.wallet-warning {
+  @apply text-sm font-bold px-3 py-2;
+  background: var(--retro-yellow);
+  color: var(--retro-black);
+  border: 3px solid var(--retro-black);
+  box-shadow: var(--retro-shadow);
+}
+
+/* Game Message */
+.game-message {
+  @apply text-center text-base font-bold py-3 px-6 w-full;
+  background: var(--retro-blue-light);
+  color: var(--retro-black);
+  border: 3px solid var(--retro-black);
+  box-shadow: var(--retro-shadow);
+}
+
+/* Transaction Status */
+.tx-status {
+  @apply text-center text-sm py-2 px-4 font-bold;
+  border: 3px solid var(--retro-black);
+  box-shadow: var(--retro-shadow);
+}
+.tx-status.pending {
+  background: var(--retro-yellow);
+  color: var(--retro-black);
+}
+.tx-status.confirming {
+  background: var(--retro-blue-light);
+  color: var(--retro-black);
+}
+
+/* Chess Board Container */
+.chess-board-container {
+  @apply p-3;
+  background: var(--retro-black);
+  border: 4px solid var(--retro-black);
+  box-shadow: 8px 8px 0px var(--retro-blue);
+}
+
+/* Chess Board */
+.chess-board {
+  @apply grid grid-rows-8 gap-0 overflow-hidden;
+  border: 4px solid var(--retro-black);
+  aspect-ratio: 1;
+  width: min(340px, 85vw);
+}
+
+.chess-board.disabled {
+  @apply pointer-events-none opacity-80;
+}
+
+.chess-row {
+  @apply grid grid-cols-8 gap-0;
+}
+
+/* Chess Squares - RetroUI */
+.chess-square {
+  @apply relative flex items-center justify-center cursor-pointer transition-all duration-100;
+  aspect-ratio: 1;
+  border: 1px solid var(--retro-black);
+}
+
+.chess-square.light {
+  background: var(--retro-white);
+}
+
+.chess-square.dark {
+  background: var(--retro-blue-light);
+}
+
+.chess-square.selected {
+  background: var(--retro-yellow) !important;
+  box-shadow: inset 0 0 0 3px var(--retro-black);
+}
+
+.chess-square.legal-move:hover {
+  background: var(--retro-yellow) !important;
+  opacity: 0.8;
+}
+
+.chess-square.last-move {
+  background: var(--retro-blue-light);
+  opacity: 0.9;
+}
+
+.chess-square.in-check {
+  background: var(--retro-red) !important;
+  animation: retro-pulse 0.5s ease-in-out infinite;
+}
+
+.chess-square.can-capture {
+  box-shadow: inset 0 0 0 4px var(--retro-red);
+}
+
+/* Move indicator dot - RetroUI */
+.move-indicator {
+  @apply absolute;
+  width: 14px;
+  height: 14px;
+  background: var(--retro-yellow);
+  border: 2px solid var(--retro-black);
+}
+
+/* Coordinate labels */
+.coord-label {
+  @apply absolute text-[10px] font-black pointer-events-none;
+  color: var(--retro-black);
+}
+.coord-label.rank {
+  @apply top-0.5 left-1;
+}
+.coord-label.file {
+  @apply bottom-0.5 right-1;
+}
+
+/* Chess Pieces - RetroUI style */
+.chess-piece {
+  @apply text-4xl select-none transition-transform duration-100;
+}
+
+.chess-piece.white .piece-symbol {
+  color: #FFFFFF;
+  text-shadow: 
+    1px 1px 0px #000000,
+    -1px 1px 0px #000000,
+    1px -1px 0px #000000,
+    -1px -1px 0px #000000,
+    2px 2px 0px rgba(0,0,0,0.3);
+}
+
+.chess-piece.black .piece-symbol {
+  color: var(--retro-black);
+  text-shadow: 1px 1px 0px rgba(255,255,255,0.3);
+}
+
+.chess-piece:hover {
+  transform: scale(1.15);
+}
+
+.chess-piece.selected {
+  transform: scale(1.2);
+  animation: retro-bounce 0.3s ease-out;
+}
+
+/* Captured Pieces */
+.captured-pieces {
+  @apply flex flex-wrap gap-1 min-h-[32px] px-3 py-2;
+  width: min(340px, 85vw);
+  background: var(--retro-gray);
+  border: 3px solid var(--retro-black);
+  box-shadow: var(--retro-shadow);
+}
+
+.captured-piece {
+  @apply text-xl;
+}
+
+/* Difficulty Selector - RetroUI */
+.difficulty-selector {
+  @apply flex flex-col items-center gap-6 py-8 px-4;
+  background: var(--retro-white);
+}
+
+.selector-header {
+  @apply text-center;
+}
+
+.selector-title {
+  @apply text-4xl font-black uppercase tracking-tight;
+  color: var(--retro-black);
+  text-shadow: 3px 3px 0px var(--retro-blue);
+}
+
+.selector-subtitle {
+  @apply text-sm font-bold mt-2;
+  color: var(--retro-black);
+}
+
+/* Compact Difficulty Row */
+.difficulty-row {
+  @apply flex flex-row gap-3 w-full max-w-sm justify-center;
+}
+
+.difficulty-btn {
+  @apply flex flex-col items-center gap-1 p-3 cursor-pointer transition-all duration-100;
+  background: var(--retro-white);
+  border: 3px solid var(--retro-black);
+  box-shadow: var(--retro-shadow);
+  min-width: 90px;
+}
+
+.difficulty-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px var(--retro-black);
+}
+
+.difficulty-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: var(--retro-shadow-sm);
+}
+
+.difficulty-btn.easy {
+  background: var(--retro-blue-light);
+}
+
+.difficulty-btn.medium {
+  background: var(--retro-yellow);
+}
+
+.difficulty-btn.hard {
+  background: var(--retro-red-light);
+}
+
+.difficulty-btn .btn-emoji {
+  @apply text-2xl;
+}
+
+.difficulty-btn .btn-title {
+  @apply text-sm font-black uppercase;
+  color: var(--retro-black);
+}
+
+/* Action Buttons Row */
+.action-buttons {
+  @apply flex flex-row gap-3 w-full max-w-sm justify-center mt-4;
+}
+
+.action-btn {
+  @apply flex-1 py-2 px-4 text-sm font-bold cursor-pointer transition-all duration-100;
+  background: var(--retro-white);
+  border: 3px solid var(--retro-black);
+  box-shadow: var(--retro-shadow);
+  color: var(--retro-black);
+}
+
+.action-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0px var(--retro-black);
+}
+
+.action-btn.tutorial {
+  background: var(--retro-blue-light);
+}
+
+.action-btn.support {
+  background: #FF69B4; /* Pink for support/love */
+}
+
+/* Support Input Section */
+.support-input-section {
+  @apply flex flex-col items-center gap-2 mt-3 w-full max-w-xs;
+}
+
+.support-label {
+  @apply text-xs font-bold;
+  color: var(--retro-black);
+}
+
+.support-input {
+  @apply w-24 px-2 py-1 text-center text-sm font-bold;
+  background: var(--retro-white);
+  border: 2px solid var(--retro-black);
+  color: var(--retro-black);
+}
+
+/* Tutorial Modal */
+.tutorial-modal {
+  @apply flex flex-col items-center gap-4 p-6 w-full max-w-sm;
+  background: var(--retro-white);
+  border: 4px solid var(--retro-black);
+  box-shadow: var(--retro-shadow-lg);
+}
+
+.tutorial-title {
+  @apply text-xl font-black uppercase;
+  color: var(--retro-black);
+}
+
+.tutorial-content {
+  @apply flex flex-col gap-3 w-full;
+}
+
+.tutorial-step {
+  @apply flex items-start gap-3 text-left;
+}
+
+.tutorial-step .step-num {
+  @apply flex-shrink-0 w-6 h-6 flex items-center justify-center text-sm font-black;
+  background: var(--retro-blue);
+  color: var(--retro-white);
+  border: 2px solid var(--retro-black);
+}
+
+.tutorial-step p {
+  @apply text-sm font-medium;
+  color: var(--retro-black);
+}
+
+.back-button {
+  @apply w-full py-3 px-4 text-base font-bold cursor-pointer transition-all duration-100 mt-2;
+  background: var(--retro-blue);
+  color: var(--retro-white);
+  border: 3px solid var(--retro-black);
+  box-shadow: var(--retro-shadow);
+}
+
+.back-button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0px var(--retro-black);
+}
+
+/* Legacy difficulty cards (keep for compatibility) */
+.difficulty-cards {
+  @apply flex flex-col gap-4 w-full max-w-sm;
+}
+
+.difficulty-card {
+  @apply flex flex-col items-center gap-2 p-5 cursor-pointer transition-all duration-100;
+  background: var(--retro-white);
+  border: 4px solid var(--retro-black);
+  box-shadow: var(--retro-shadow-lg);
+}
+
+.difficulty-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px var(--retro-black);
+}
+
+.difficulty-card:active {
+  transform: translate(2px, 2px);
+  box-shadow: var(--retro-shadow-sm);
+}
+
+.difficulty-card.easy {
+  background: var(--retro-blue-light);
+}
+
+.difficulty-card.medium {
+  background: var(--retro-yellow);
+}
+
+.difficulty-card.hard {
+  background: var(--retro-red-light);
+}
+
+.difficulty-emoji {
+  @apply text-5xl;
+}
+
+.difficulty-title {
+  @apply text-2xl font-black uppercase;
+  color: var(--retro-black);
+}
+
+.difficulty-desc {
+  @apply text-sm font-bold;
+  color: var(--retro-black);
+}
+
+.selector-footer {
+  @apply text-center text-xs font-bold mt-3;
+  color: var(--retro-black);
+}
+
+/* Wallet Connect Section - RetroUI */
+.wallet-connect-section {
+  @apply flex flex-col items-center gap-6 w-full max-w-sm;
+}
+
+.connect-prompt {
+  @apply flex flex-col items-center gap-3 p-6 text-center;
+  background: var(--retro-white);
+  border: 4px solid var(--retro-black);
+  box-shadow: var(--retro-shadow-lg);
+}
+
+.connect-icon {
+  @apply text-6xl;
+}
+
+.connect-text {
+  @apply text-xl font-black uppercase;
+  color: var(--retro-black);
+}
+
+.connect-subtext {
+  @apply text-sm font-bold;
+  color: var(--retro-black);
+}
+
+.connect-wallet-button {
+  @apply w-full py-4 px-6 text-xl font-black uppercase cursor-pointer transition-all duration-100;
+  background: var(--retro-blue);
+  color: var(--retro-white);
+  border: 4px solid var(--retro-black);
+  box-shadow: var(--retro-shadow-lg);
+}
+
+.connect-wallet-button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px var(--retro-black);
+}
+
+.connect-wallet-button:active {
+  transform: translate(2px, 2px);
+  box-shadow: var(--retro-shadow-sm);
+}
+
+.connect-wallet-button:disabled {
+  @apply opacity-60 cursor-not-allowed;
+  transform: none;
+  box-shadow: var(--retro-shadow);
+}
+
+.connect-wallet-button.switch-network {
+  background: var(--retro-red);
+}
+
+/* Game Over Overlay - RetroUI */
+.game-over-overlay {
+  @apply fixed inset-0 z-50 flex items-center justify-center;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.game-over-modal {
+  @apply flex flex-col items-center gap-4 p-8 text-center max-w-sm mx-4;
+  background: var(--retro-white);
+  border: 4px solid var(--retro-black);
+  box-shadow: 8px 8px 0px var(--retro-blue);
+}
+
+.game-over-title {
+  @apply text-3xl font-black uppercase;
+  color: var(--retro-black);
+}
+
+.game-over-stats {
+  @apply text-lg font-bold;
+  color: var(--retro-black);
+}
+
+.game-over-chain {
+  @apply text-sm font-bold px-3 py-2;
+  background: var(--retro-blue-light);
+  color: var(--retro-black);
+  border: 2px solid var(--retro-black);
+}
+
+.new-game-button {
+  @apply px-8 py-4 text-xl font-black uppercase cursor-pointer transition-all duration-100;
+  background: var(--retro-blue);
+  color: var(--retro-white);
+  border: 4px solid var(--retro-black);
+  box-shadow: var(--retro-shadow-lg);
+}
+
+.new-game-button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px var(--retro-black);
+}
+
+.new-game-button:active {
+  transform: translate(2px, 2px);
+  box-shadow: var(--retro-shadow-sm);
+}
+
+/* Resign Button - RetroUI */
+.resign-button {
+  @apply text-base font-bold mt-3 px-4 py-2 cursor-pointer transition-all duration-100;
+  background: var(--retro-white);
+  color: var(--retro-black);
+  border: 3px solid var(--retro-black);
+  box-shadow: var(--retro-shadow);
+}
+
+.resign-button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0px var(--retro-black);
+}
+
+/* Cancel Transaction Button - RetroUI */
+.cancel-tx-button {
+  @apply w-full py-3 px-4 text-base font-bold uppercase cursor-pointer transition-all duration-100;
+  background: var(--retro-red);
+  color: var(--retro-white);
+  border: 3px solid var(--retro-black);
+  box-shadow: var(--retro-shadow);
+}
+
+.cancel-tx-button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0px var(--retro-black);
+}
+
+/* RetroUI Animations */
+@keyframes retro-pulse {
+  0%, 100% { 
+    background: var(--retro-red); 
+    transform: scale(1);
+  }
+  50% { 
+    background: var(--retro-red-light);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes retro-bounce {
+  0%, 100% { transform: scale(1.2); }
+  50% { transform: scale(1.35) rotate(-5deg); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+   ========================================== */
+
+/* Extra small devices (phones, 320px and up) */
+@media (max-width: 374px) {
+  .chess-container {
+    @apply px-1;
+  }
+  
+  .chess-board {
+    width: min(280px, 92vw);
+  }
+  
+  .captured-pieces {
+    width: min(280px, 92vw);
+  }
+  
+  .selector-title {
+    @apply text-2xl;
+  }
+  
+  .difficulty-btn {
+    min-width: 70px;
+    @apply p-2;
+  }
+  
+  .difficulty-btn .btn-emoji {
+    @apply text-xl;
+  }
+  
+  .difficulty-btn .btn-title {
+    @apply text-xs;
+  }
+  
+  .action-buttons {
+    @apply flex-col gap-2;
+  }
+  
+  .chess-piece {
+    @apply text-3xl;
+  }
+}
+
+/* Small devices (phones, 375px and up) */
+@media (min-width: 375px) and (max-width: 424px) {
+  .chess-board {
+    width: min(320px, 88vw);
+  }
+  
+  .captured-pieces {
+    width: min(320px, 88vw);
+  }
+  
+  .selector-title {
+    @apply text-3xl;
+  }
+  
+  .difficulty-btn {
+    min-width: 85px;
+  }
+  
+  .chess-piece {
+    @apply text-3xl;
+  }
+}
+
+/* Medium devices (tablets, 425px and up) */
+@media (min-width: 425px) and (max-width: 767px) {
+  .chess-board {
+    width: min(360px, 85vw);
+  }
+  
+  .captured-pieces {
+    width: min(360px, 85vw);
+  }
+  
+  .chess-piece {
+    @apply text-4xl;
+  }
+  
+  .difficulty-row {
+    @apply gap-4;
+  }
+  
+  .difficulty-btn {
+    min-width: 100px;
+    @apply p-4;
+  }
+}
+
+/* Large devices (desktops, 768px and up) */
+@media (min-width: 768px) {
+  .chess-container {
+    @apply max-w-lg px-4;
+  }
+  
+  .chess-board {
+    width: 400px;
+  }
+  
+  .captured-pieces {
+    width: 400px;
+  }
+  
+  .chess-piece {
+    @apply text-5xl;
+  }
+  
+  .selector-title {
+    @apply text-4xl;
+  }
+  
+  .difficulty-row {
+    @apply gap-5;
+  }
+  
+  .difficulty-btn {
+    min-width: 110px;
+    @apply p-5;
+  }
+  
+  .difficulty-btn .btn-emoji {
+    @apply text-3xl;
+  }
+  
+  .difficulty-btn .btn-title {
+    @apply text-base;
+  }
+  
+  .action-buttons {
+    @apply gap-4;
+  }
+  
+  .game-message {
+    @apply text-lg py-4;
+  }
+  
+  .chess-board-container {
+    box-shadow: 10px 10px 0px var(--retro-blue);
+  }
+  
+  .tutorial-modal {
+    @apply p-8;
+  }
+  
+  .tutorial-step p {
+    @apply text-base;
+  }
+}
+
+/* Extra large devices (1024px and up) */
+@media (min-width: 1024px) {
+  .chess-board {
+    width: 440px;
+  }
+  
+  .captured-pieces {
+    width: 440px;
+  }
+}
+
+/* Hover effects only on devices that support it */
+@media (hover: hover) {
+  .difficulty-btn:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 7px 7px 0px var(--retro-black);
+  }
+  
+  .action-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--retro-black);
+  }
+  
+  .connect-wallet-button:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0px var(--retro-black);
+  }
+  
+  .chess-square:hover {
+    filter: brightness(0.95);
+  }
+}
+
+/* Force light/white theme - RetroUI style */
+/* Dark mode disabled to maintain consistent white background */
+
+/* Smooth transitions for all interactive elements */
+.difficulty-btn,
+.action-btn,
+.connect-wallet-button,
+.cancel-tx-button,
+.resign-button,
+.back-button,
+.new-game-button {
+  transition: all 0.15s ease-out;
+}
+
+/* Focus states for accessibility */
+.difficulty-btn:focus,
+.action-btn:focus,
+.connect-wallet-button:focus,
+.chess-square:focus {
+  outline: 3px solid var(--retro-yellow);
+  outline-offset: 2px;
+}
+
+/* Loading animation */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  border: 3px solid var(--retro-gray);
+  border-top-color: var(--retro-blue);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Lucide Icon Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 2s ease-in-out infinite;
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 1s ease-in-out infinite;
+}
+
+.animate-hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.animate-hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+.animate-icon-hover {
+  transition: transform 0.2s ease;
+  display: inline-block;
+}
+
+.animate-icon-hover:hover {
+  transform: scale(1.15) rotate(5deg);
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-pulse {
+  animation: pulse-slow 0.5s ease-in-out infinite;
+}
+

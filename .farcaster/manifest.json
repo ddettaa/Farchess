@@ -1,0 +1,18 @@
+{
+  "accountAssociation": {
+    "header": "eyJmaWQiOjAsInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwIn0",
+    "payload": "eyJkb21haW4iOiJmYXJjaGVzcy52ZXJjZWwuYXBwIn0",
+    "signature": "MHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDA"
+  },
+  "frame": {
+    "version": "1",
+    "name": "FarChess",
+    "iconUrl": "https://farchess.vercel.app/icon.png",
+    "homeUrl": "https://farchess.vercel.app",
+    "imageUrl": "https://farchess.vercel.app/splash.png",
+    "buttonTitle": "Launch FarChess",
+    "splashImageUrl": "https://farchess.vercel.app/splash.png",
+    "splashBackgroundColor": "#3533cd",
+    "webhookUrl": "https://farchess.vercel.app/api/webhook"
+  }
+}

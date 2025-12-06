@@ -465,6 +465,7 @@ export function NeynarAuthButton() {
   }, [useMiniappFlow, nonce, channelToken, connect]);
 
   // Handle fetching signers after successful authentication
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (
       message &&
@@ -543,7 +544,8 @@ export function NeynarAuthButton() {
 
       handleSignerFlow();
     }
-  }, [message, signature]); // Simplified dependencies
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [message, signature]); // Intentionally simplified - adding more deps causes infinite loops
 
   // Miniapp flow using NextAuth
   const handleMiniappSignIn = useCallback(async () => {
