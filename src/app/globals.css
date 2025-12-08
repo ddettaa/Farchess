@@ -1014,10 +1014,13 @@ body {
 }
 
 .support-close-btn {
-  @apply p-2 cursor-pointer transition-all duration-100;
+  @apply p-2 cursor-pointer transition-all duration-100 flex items-center justify-center;
   background: var(--retro-white);
   border: 2px solid var(--retro-black);
   box-shadow: var(--retro-shadow-sm);
+  color: var(--retro-black);
+  min-width: 36px;
+  min-height: 36px;
 }
 
 .support-close-btn:hover {
@@ -1109,7 +1112,7 @@ body {
 
 /* Amount Input */
 .amount-input-wrapper {
-  @apply flex items-center;
+  @apply flex items-center overflow-hidden;
   background: var(--retro-white);
   border: 3px solid var(--retro-black);
   box-shadow: var(--retro-shadow);
@@ -1121,6 +1124,7 @@ body {
   border: none;
   outline: none;
   color: var(--retro-black);
+  min-width: 0;
 }
 
 .amount-input::placeholder {
@@ -1129,15 +1133,10 @@ body {
 }
 
 .amount-token {
-  @apply px-3 text-sm font-black;
+  @apply px-4 py-3 text-sm font-black flex-shrink-0;
   color: var(--retro-black);
   background: var(--retro-gray);
   border-left: 2px solid var(--retro-black);
-  height: 100%;
-  display: flex;
-  align-items: center;
-  padding-top: 12px;
-  padding-bottom: 12px;
 }
 
 /* Amount Presets */
