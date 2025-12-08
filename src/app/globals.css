@@ -1231,3 +1231,75 @@ body {
     @apply text-xs px-2;
   }
 }
+
+/* ==========================================
+   ADD MINI APP PROMPT MODAL
+   ========================================== */
+
+.add-app-overlay {
+  @apply fixed inset-0 z-50 flex items-center justify-center px-4;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.add-app-modal {
+  @apply relative flex flex-col items-center gap-4 w-full max-w-xs p-6 text-center;
+  background: var(--retro-white);
+  border: 4px solid var(--retro-black);
+  box-shadow: 8px 8px 0px var(--retro-blue);
+}
+
+.add-app-close {
+  @apply absolute top-3 right-3 p-1 cursor-pointer transition-all duration-100;
+  background: var(--retro-white);
+  border: 2px solid var(--retro-black);
+  color: var(--retro-black);
+}
+
+.add-app-close:hover {
+  transform: scale(1.1);
+}
+
+.add-app-icon {
+  @apply text-5xl;
+}
+
+.add-app-title {
+  @apply text-xl font-black uppercase;
+  color: var(--retro-black);
+}
+
+.add-app-desc {
+  @apply text-sm font-medium;
+  color: var(--retro-black);
+}
+
+.add-app-button {
+  @apply w-full py-3 px-4 text-base font-black uppercase cursor-pointer transition-all duration-100 flex items-center justify-center;
+  background: var(--retro-blue);
+  color: var(--retro-white);
+  border: 3px solid var(--retro-black);
+  box-shadow: var(--retro-shadow);
+}
+
+.add-app-button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px var(--retro-black);
+}
+
+.add-app-button:active {
+  transform: translate(1px, 1px);
+  box-shadow: var(--retro-shadow-sm);
+}
+
+.add-app-skip {
+  @apply text-sm font-medium cursor-pointer;
+  color: var(--retro-black);
+  opacity: 0.6;
+  background: none;
+  border: none;
+}
+
+.add-app-skip:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
