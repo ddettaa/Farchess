@@ -19,6 +19,7 @@ import { Difficulty, getAIMove, getAIThinkingDelay } from "../../lib/chessAI";
 import { useChessTransaction } from "../../hooks/useChessTransaction";
 import { ChessBoard } from "./ChessBoard";
 import { DifficultySelector } from "./DifficultySelector";
+import { Volume2, VolumeX } from "lucide-react";
 
 type GamePhase = 'menu' | 'playing' | 'gameOver';
 
@@ -65,6 +66,52 @@ export function ChessGame({ enableBlockchain = true }: ChessGameProps) {
 
   // Track previous txState to detect confirmation
   const prevTxConfirmed = useRef(false);
+  
+  // Audio ref for background music
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  
+  // Mute state
+  const [isMuted, setIsMuted] = useState(false);
+
+  // Initialize and control background music
+  useEffect(() => {
+    // Create audio element if not exists
+    if (!audioRef.current) {
+      audioRef.current = new Audio('/Gymnopédie No. 1 [TubeRipper.cc].m4a');
+      audioRef.current.loop = true;
+      audioRef.current.volume = 0.3;
+    }
+
+    // Play music when game starts, pause when back to menu
+    if (gamePhase === 'playing' || gamePhase === 'gameOver') {
+      audioRef.current.play().catch((e) => {
+        // Browser may block autoplay, that's okay
+        console.log('Audio autoplay blocked:', e);
+      });
+    } else {
+      audioRef.current.pause();
+    }
+
+    // Cleanup on unmount
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, [gamePhase]);
+
+  // Handle mute toggle
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.muted = isMuted;
+    }
+  }, [isMuted]);
+
+  // Toggle mute function
+  const toggleMute = useCallback(() => {
+    setIsMuted(prev => !prev);
+  }, []);
 
   // When transaction is confirmed, apply the pending move
   useEffect(() => {
@@ -257,6 +304,13 @@ export function ChessGame({ enableBlockchain = true }: ChessGameProps) {
       <div className="game-header">
         <div className="difficulty-badge">{difficulty.toUpperCase()}</div>
         <div className="move-count">Move {Math.ceil(gameState.moveHistory.length / 2)}</div>
+        <button 
+          className="mute-button"
+          onClick={toggleMute}
+          title={isMuted ? 'Unmute' : 'Mute'}
+        >
+          {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+        </button>
         {!isConnected && enableBlockchain && (
           <div className="wallet-warning">⚠️ Connect wallet to record moves</div>
         )}

@@ -188,6 +188,25 @@ body {
   box-shadow: var(--retro-shadow);
 }
 
+/* Mute Button */
+.mute-button {
+  @apply p-2 cursor-pointer transition-all duration-100 flex items-center justify-center;
+  background: var(--retro-white);
+  border: 2px solid var(--retro-black);
+  box-shadow: var(--retro-shadow-sm);
+  color: var(--retro-black);
+}
+
+.mute-button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--retro-black);
+}
+
+.mute-button:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
 /* Game Message */
 .game-message {
   @apply text-center text-base font-bold py-3 px-6 w-full;
@@ -969,3 +988,246 @@ body {
   animation: pulse-slow 0.5s ease-in-out infinite;
 }
 
+/* ==========================================
+   SUPPORT MODAL - DEX STYLE
+   ========================================== */
+
+.support-modal-overlay {
+  @apply fixed inset-0 z-50 flex items-center justify-center px-4;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.support-modal {
+  @apply flex flex-col gap-4 w-full max-w-sm p-6;
+  background: var(--retro-white);
+  border: 4px solid var(--retro-black);
+  box-shadow: 8px 8px 0px var(--retro-blue);
+}
+
+.support-modal-header {
+  @apply flex items-center justify-between;
+}
+
+.support-modal-title {
+  @apply text-xl font-black uppercase flex items-center;
+  color: var(--retro-black);
+}
+
+.support-close-btn {
+  @apply p-2 cursor-pointer transition-all duration-100;
+  background: var(--retro-white);
+  border: 2px solid var(--retro-black);
+  box-shadow: var(--retro-shadow-sm);
+}
+
+.support-close-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--retro-black);
+}
+
+.support-section {
+  @apply flex flex-col gap-2;
+}
+
+.support-label {
+  @apply text-sm font-bold uppercase;
+  color: var(--retro-black);
+}
+
+/* Token Selector */
+.token-selector-wrapper {
+  @apply relative;
+}
+
+.token-selector-btn {
+  @apply w-full flex items-center gap-3 p-3 cursor-pointer transition-all duration-100;
+  background: var(--retro-white);
+  border: 3px solid var(--retro-black);
+  box-shadow: var(--retro-shadow);
+}
+
+.token-selector-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0px var(--retro-black);
+}
+
+.token-icon {
+  @apply text-2xl;
+}
+
+.token-symbol {
+  @apply text-base font-black flex-1 text-left;
+  color: var(--retro-black);
+}
+
+.token-chevron {
+  transition: transform 0.2s ease;
+}
+
+.token-chevron.rotate {
+  transform: rotate(180deg);
+}
+
+.token-list {
+  @apply absolute top-full left-0 right-0 mt-1 z-10;
+  background: var(--retro-white);
+  border: 3px solid var(--retro-black);
+  box-shadow: var(--retro-shadow);
+}
+
+.token-item {
+  @apply w-full flex items-center gap-3 p-3 cursor-pointer transition-all duration-100;
+  background: var(--retro-white);
+  border-bottom: 2px solid var(--retro-black);
+}
+
+.token-item:last-child {
+  border-bottom: none;
+}
+
+.token-item:hover {
+  background: var(--retro-blue-light);
+}
+
+.token-item.selected {
+  background: var(--retro-yellow);
+}
+
+.token-info {
+  @apply flex flex-col flex-1 text-left;
+}
+
+.token-name {
+  @apply text-xs;
+  color: var(--retro-black);
+  opacity: 0.7;
+}
+
+.token-check {
+  color: var(--retro-black);
+}
+
+/* Amount Input */
+.amount-input-wrapper {
+  @apply flex items-center;
+  background: var(--retro-white);
+  border: 3px solid var(--retro-black);
+  box-shadow: var(--retro-shadow);
+}
+
+.amount-input {
+  @apply flex-1 px-3 py-3 text-lg font-bold;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--retro-black);
+}
+
+.amount-input::placeholder {
+  color: var(--retro-black);
+  opacity: 0.3;
+}
+
+.amount-token {
+  @apply px-3 text-sm font-black;
+  color: var(--retro-black);
+  background: var(--retro-gray);
+  border-left: 2px solid var(--retro-black);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+/* Amount Presets */
+.amount-presets {
+  @apply flex gap-2 mt-2;
+}
+
+.preset-btn {
+  @apply flex-1 py-2 px-3 text-sm font-bold cursor-pointer transition-all duration-100;
+  background: var(--retro-white);
+  border: 2px solid var(--retro-black);
+  box-shadow: var(--retro-shadow-sm);
+  color: var(--retro-black);
+}
+
+.preset-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--retro-black);
+}
+
+.preset-btn.active {
+  background: var(--retro-blue);
+  color: var(--retro-white);
+}
+
+/* Support Status Messages */
+.support-error {
+  @apply flex items-center gap-2 p-3 text-sm font-bold;
+  background: var(--retro-red-light);
+  color: var(--retro-black);
+  border: 2px solid var(--retro-black);
+}
+
+.support-status {
+  @apply flex items-center gap-2 p-3 text-sm font-bold;
+  border: 2px solid var(--retro-black);
+}
+
+.support-status.pending {
+  background: var(--retro-yellow);
+  color: var(--retro-black);
+}
+
+.support-status.success {
+  background: #10B981;
+  color: var(--retro-white);
+}
+
+/* Confirm Button */
+.confirm-support-btn {
+  @apply w-full py-4 px-6 text-lg font-black uppercase cursor-pointer transition-all duration-100 flex items-center justify-center;
+  background: #FF69B4;
+  color: var(--retro-white);
+  border: 4px solid var(--retro-black);
+  box-shadow: var(--retro-shadow-lg);
+}
+
+.confirm-support-btn:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px var(--retro-black);
+}
+
+.confirm-support-btn:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: var(--retro-shadow-sm);
+}
+
+.confirm-support-btn:disabled {
+  @apply opacity-60 cursor-not-allowed;
+  transform: none;
+  box-shadow: var(--retro-shadow);
+}
+
+.support-info {
+  @apply text-center text-xs font-medium;
+  color: var(--retro-black);
+  opacity: 0.7;
+}
+
+/* Responsive for Support Modal */
+@media (max-width: 374px) {
+  .support-modal {
+    @apply p-4;
+  }
+  
+  .amount-presets {
+    @apply flex-wrap;
+  }
+  
+  .preset-btn {
+    @apply text-xs px-2;
+  }
+}

@@ -12,7 +12,7 @@
     "imageUrl": "https://farchess.vercel.app/splash.png",
     "buttonTitle": "Launch FarChess",
     "splashImageUrl": "https://farchess.vercel.app/splash.png",
-    "splashBackgroundColor": "#3533cd",
+    "splashBackgroundColor": "#0D0C33",
     "webhookUrl": "https://farchess.vercel.app/api/webhook"
   }
 }

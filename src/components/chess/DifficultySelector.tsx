@@ -7,10 +7,11 @@
 "use client";
 
 import { useState } from "react";
-import { useAccount, useConnect, useSwitchChain, useSendTransaction } from "wagmi";
+import { useAccount, useConnect, useSwitchChain } from "wagmi";
 import { base } from "wagmi/chains";
 import { useMiniApp } from "@neynar/react";
 import { Difficulty } from "../../lib/chessAI";
+import { SupportModal } from "./SupportModal";
 import { 
   Sprout, 
   Zap, 
@@ -22,11 +23,11 @@ import {
   RefreshCw,
   ArrowLeft,
   Trophy,
+  Share2,
   type LucideIcon
 } from "lucide-react";
 
-// Support address for donations
-const SUPPORT_ADDRESS = "0xa9b27127216144159D9747C438598E85a9d26482" as `0x${string}`;
+// Support address moved to SupportModal component
 
 interface DifficultySelectorProps {
   onSelect: (difficulty: Difficulty) => void;
@@ -42,11 +43,10 @@ export function DifficultySelector({ onSelect }: DifficultySelectorProps) {
   const { isConnected, chainId } = useAccount();
   const { connect, connectors, isPending: isConnecting } = useConnect();
   const { switchChain, isPending: isSwitching } = useSwitchChain();
-  const { sendTransaction, isPending: isSendingSupport } = useSendTransaction();
-  const { context } = useMiniApp();
+  const { context, actions } = useMiniApp();
   
   const [showTutorial, setShowTutorial] = useState(false);
-  const [supportAmount, setSupportAmount] = useState("0.001");
+  const [showSupportModal, setShowSupportModal] = useState(false);
 
   const isOnBase = chainId === base.id;
 
@@ -61,26 +61,7 @@ export function DifficultySelector({ onSelect }: DifficultySelectorProps) {
     switchChain({ chainId: base.id });
   };
 
-  // Handle support/donate with input validation
-  const handleSupport = () => {
-    const amount = parseFloat(supportAmount);
-    
-    if (isNaN(amount) || amount <= 0) {
-      alert('Please enter a valid positive amount');
-      return;
-    }
-    
-    if (amount > 10) {
-      const confirmed = window.confirm(`Are you sure you want to send ${amount} ETH?`);
-      if (!confirmed) return;
-    }
-    
-    const valueInWei = BigInt(Math.floor(amount * 1e18));
-    sendTransaction({
-      to: SUPPORT_ADDRESS,
-      value: valueInWei,
-    });
-  };
+  // Support modal is now handled by SupportModal component
 
   // Tutorial Modal
   if (showTutorial) {
@@ -199,35 +180,36 @@ export function DifficultySelector({ onSelect }: DifficultySelectorProps) {
             </button>
             
             <button 
-              className="action-btn support animate-hover-lift"
-              onClick={handleSupport}
-              disabled={isSendingSupport}
+              className="action-btn share animate-hover-lift"
+              onClick={() => {
+                if (actions) {
+                  actions.composeCast({
+                    text: "♟️ Play on-chain chess with me on FarChess!\n\nEvery move is recorded on Base. Challenge the AI and prove your skills! 🏆",
+                    embeds: ["https://farchess.vercel.app"],
+                  });
+                }
+              }}
             >
-              <Heart 
-                size={16} 
-                className={`inline mr-1 ${isSendingSupport ? 'animate-pulse' : ''}`} 
-                fill={isSendingSupport ? 'currentColor' : 'none'} 
-              />
-              {isSendingSupport ? '...' : 'Support'}
+              <Share2 size={16} className="inline mr-1" /> Share
             </button>
-          </div>
-          
-          {/* Support amount input */}
-          <div className="support-input-section">
-            <label className="support-label">Support Amount (ETH):</label>
-            <input
-              type="number"
-              className="support-input"
-              value={supportAmount}
-              onChange={(e) => setSupportAmount(e.target.value)}
-              min="0.0001"
-              step="0.001"
-            />
+            
+            <button 
+              className="action-btn support animate-hover-lift"
+              onClick={() => setShowSupportModal(true)}
+            >
+              <Heart size={16} className="inline mr-1" /> Support
+            </button>
           </div>
           
           <div className="selector-footer animate-fadeIn">
             <p>✅ Base • Moves on-chain</p>
           </div>
+          
+          {/* Support Modal */}
+          <SupportModal 
+            isOpen={showSupportModal} 
+            onClose={() => setShowSupportModal(false)} 
+          />
         </>
       )}
     </div>
