@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
 
   const user = fid ? await getNeynarUser(Number(fid)) : null;
 
-  return new ImageResponse(
+  const imageResponse = new ImageResponse(
     (
       <div tw="flex h-full w-full flex-col justify-center items-center bg-slate-950 text-white">
         {/* Background Gradient Mesh */}
@@ -41,4 +41,11 @@ export async function GET(request: NextRequest) {
       height: 800,
     }
   );
+
+  // Set cache headers to prevent long-term caching
+  imageResponse.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+  imageResponse.headers.set('Pragma', 'no-cache');
+  imageResponse.headers.set('Expires', '0');
+
+  return imageResponse;
 }
